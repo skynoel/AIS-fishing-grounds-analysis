@@ -30,6 +30,7 @@ def avperm(folder_path,name,year,month): #將經過時間碼標記的原始資�
             row=2#初始化計數器
             rowchange=30#初始化計數器
             r2=40#初始化計數器
+            r3=13
             items = os.listdir(folder_path1)#列出資料夾中所有內容
             for item in tqdm(items):#遍歷資料夾所有的所有內容
                 item_path = os.path.join(folder_path1, item)#取出資料夾中內容的路徑
@@ -58,6 +59,14 @@ def avperm(folder_path,name,year,month): #將經過時間碼標記的原始資�
                                 for k in range(0,4):
                                     count[row][k]=int(data.iloc[k])
                                     count[row+1][k]=int(data.iloc[k])
+                            elif r3<int(data.iloc[1]):
+                                row=row+2
+                                count.append([0]*65)
+                                count.append([0]*65)
+                                r3=int(data.iloc[1])
+                                for k in range(0,4):
+                                    count[row][k]=int(data.iloc[k])
+                                    count[row+1][k]=int(data.iloc[k])   
                             if data.iloc[8] == "A":
                                 count[row][4]="A"
                                 count[row][int(data.iloc[4])+5]=int(count[row][int(data.iloc[4])+5])+1
@@ -66,16 +75,13 @@ def avperm(folder_path,name,year,month): #將經過時間碼標記的原始資�
                                 count[row+1][int(data.iloc[4])+5]=int(count[row+1][int(data.iloc[4])+5])+1
                             rowchange=int(data.iloc[3])
                             r2=int(data.iloc[2])
+                            r3=int(data.iloc[1])
                             if row==2:
                                 for k in range(0,4):
                                     count[row][k]=int(data.iloc[k])
                                     count[row+1][k]=int(data.iloc[k])
                         elif isinstance(data.iloc[3],str)==True:
                             if data.iloc[3].isdigit():
-                                if row==2:
-                                    for k in range(0,4):
-                                        count[row][k]=int(data.iloc[k])
-                                        count[row+1][k]=int(data.iloc[k])
                                 if rowchange<int(data.iloc[3]):
                                     row=row+2
                                     count.append([0]*65)
@@ -92,6 +98,14 @@ def avperm(folder_path,name,year,month): #將經過時間碼標記的原始資�
                                     for k in range(0,4):
                                         count[row][k]=int(data.iloc[k])
                                         count[row+1][k]=int(data.iloc[k])
+                                elif r3<int(data.iloc[1]):
+                                    row=row+2
+                                    count.append([0]*65)
+                                    count.append([0]*65)
+                                    r3=int(data.iloc[1])
+                                    for k in range(0,4):
+                                        count[row][k]=int(data.iloc[k])
+                                        count[row+1][k]=int(data.iloc[k])
                                 if data.iloc[8] == "A":
                                     count[row][4]="A"
                                     count[row][int(data.iloc[4])+5]=int(count[row][int(data.iloc[4])+5])+1
@@ -100,11 +114,12 @@ def avperm(folder_path,name,year,month): #將經過時間碼標記的原始資�
                                     count[row+1][int(data.iloc[4])+5]=int(count[row+1][int(data.iloc[4])+5])+1
                                 rowchange=int(data.iloc[3])
                                 r2=int(data.iloc[2])
+                                r3=int(data.iloc[1])
                                 if row==2:
                                     for k in range(0,4):
                                         count[row][k]=int(data.iloc[k])
                                         count[row+1][k]=int(data.iloc[k])
-                        if count[row-2][3]==count[row][3]:
+                        if count[row-2][3]==count[row][3] and count[row][3]==23 :
                             count[row][3]=0
                             count[row+1][3]=0
             sheetname=str(int(data.iloc[0]))+str(int(data.iloc[1]))+str(int(data.iloc[2]))#製造每日表格的名字
